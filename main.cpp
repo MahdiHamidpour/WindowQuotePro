@@ -1,4 +1,4 @@
-#include "Form1.h";
+#include "MainWindow.h";
 
 using namespace CPQ;
 
@@ -7,6 +7,6 @@ int main(array<System::String^>^ args)
 {
     Application::EnableVisualStyles();
     Application::SetCompatibleTextRenderingDefault(false);
-    Application::Run(gcnew Form1());
+    Application::Run(gcnew MainWindow());
     return 0;
 }
