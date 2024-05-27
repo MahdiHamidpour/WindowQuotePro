@@ -79,6 +79,8 @@ namespace CPQ {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ PricePerUnit;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Off;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ TotalPrice;
+	private: System::Windows::Forms::Button^ btnQuote;
+	private: System::Windows::Forms::Button^ btnSave;
 
 
 
@@ -118,12 +120,6 @@ namespace CPQ {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->dgvInvoice = (gcnew System::Windows::Forms::DataGridView());
-			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
-			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->txtTotalQty = (gcnew System::Windows::Forms::TextBox());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->txtTotalPrice = (gcnew System::Windows::Forms::TextBox());
 			this->Product = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Material = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Size = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
@@ -131,6 +127,14 @@ namespace CPQ {
 			this->PricePerUnit = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Off = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->TotalPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->txtTotalQty = (gcnew System::Windows::Forms::TextBox());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->txtTotalPrice = (gcnew System::Windows::Forms::TextBox());
+			this->btnQuote = (gcnew System::Windows::Forms::Button());
+			this->btnSave = (gcnew System::Windows::Forms::Button());
 			this->panel1->SuspendLayout();
 			this->dgbProduct->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudQty))->BeginInit();
@@ -278,6 +282,46 @@ namespace CPQ {
 			this->dgvInvoice->CurrentCellChanged += gcnew System::EventHandler(this, &MainWindow::dgvInvoice_CurrentCellChanged);
 			this->dgvInvoice->RowsAdded += gcnew System::Windows::Forms::DataGridViewRowsAddedEventHandler(this, &MainWindow::dgvInvoice_RowsAdded);
 			// 
+			// Product
+			// 
+			this->Product->HeaderText = L"Product";
+			this->Product->Name = L"Product";
+			// 
+			// Material
+			// 
+			this->Material->HeaderText = L"Material";
+			this->Material->Name = L"Material";
+			// 
+			// Size
+			// 
+			this->Size->HeaderText = L"Size";
+			this->Size->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Small", L"Medium", L"Large" });
+			this->Size->Name = L"Size";
+			this->Size->Resizable = System::Windows::Forms::DataGridViewTriState::True;
+			this->Size->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::Automatic;
+			// 
+			// Qty
+			// 
+			this->Qty->HeaderText = L"Qty";
+			this->Qty->Name = L"Qty";
+			// 
+			// PricePerUnit
+			// 
+			this->PricePerUnit->HeaderText = L"Unit Price";
+			this->PricePerUnit->Name = L"PricePerUnit";
+			this->PricePerUnit->ReadOnly = true;
+			// 
+			// Off
+			// 
+			this->Off->HeaderText = L"Off";
+			this->Off->Name = L"Off";
+			// 
+			// TotalPrice
+			// 
+			this->TotalPrice->HeaderText = L"Total Price";
+			this->TotalPrice->Name = L"TotalPrice";
+			this->TotalPrice->ReadOnly = true;
+			// 
 			// tableLayoutPanel1
 			// 
 			this->tableLayoutPanel1->AutoScroll = true;
@@ -305,6 +349,8 @@ namespace CPQ {
 			this->flowLayoutPanel1->Controls->Add(this->txtTotalQty);
 			this->flowLayoutPanel1->Controls->Add(this->label6);
 			this->flowLayoutPanel1->Controls->Add(this->txtTotalPrice);
+			this->flowLayoutPanel1->Controls->Add(this->btnSave);
+			this->flowLayoutPanel1->Controls->Add(this->btnQuote);
 			this->flowLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->flowLayoutPanel1->Location = System::Drawing::Point(3, 589);
 			this->flowLayoutPanel1->MinimumSize = System::Drawing::Size(0, 25);
@@ -349,45 +395,26 @@ namespace CPQ {
 			this->txtTotalPrice->Size = System::Drawing::Size(100, 20);
 			this->txtTotalPrice->TabIndex = 3;
 			// 
-			// Product
+			// btnQuote
 			// 
-			this->Product->HeaderText = L"Product";
-			this->Product->Name = L"Product";
+			this->btnQuote->AutoSize = true;
+			this->btnQuote->Location = System::Drawing::Point(420, 6);
+			this->btnQuote->Name = L"btnQuote";
+			this->btnQuote->Size = System::Drawing::Size(93, 23);
+			this->btnQuote->TabIndex = 4;
+			this->btnQuote->Text = L"Generate Quote";
+			this->btnQuote->UseVisualStyleBackColor = true;
+			this->btnQuote->Click += gcnew System::EventHandler(this, &MainWindow::btnQuote_Click);
 			// 
-			// Material
+			// btnSave
 			// 
-			this->Material->HeaderText = L"Material";
-			this->Material->Name = L"Material";
-			// 
-			// Size
-			// 
-			this->Size->HeaderText = L"Size";
-			this->Size->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Small", L"Medium", L"Large" });
-			this->Size->Name = L"Size";
-			this->Size->Resizable = System::Windows::Forms::DataGridViewTriState::True;
-			this->Size->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::Automatic;
-			// 
-			// Qty
-			// 
-			this->Qty->HeaderText = L"Qty";
-			this->Qty->Name = L"Qty";
-			// 
-			// PricePerUnit
-			// 
-			this->PricePerUnit->HeaderText = L"Unit Price";
-			this->PricePerUnit->Name = L"PricePerUnit";
-			this->PricePerUnit->ReadOnly = true;
-			// 
-			// Off
-			// 
-			this->Off->HeaderText = L"Off";
-			this->Off->Name = L"Off";
-			// 
-			// TotalPrice
-			// 
-			this->TotalPrice->HeaderText = L"Total Price";
-			this->TotalPrice->Name = L"TotalPrice";
-			this->TotalPrice->ReadOnly = true;
+			this->btnSave->Location = System::Drawing::Point(339, 6);
+			this->btnSave->Name = L"btnSave";
+			this->btnSave->Size = System::Drawing::Size(75, 23);
+			this->btnSave->TabIndex = 5;
+			this->btnSave->Text = L"Save";
+			this->btnSave->UseVisualStyleBackColor = true;
+			this->btnSave->Click += gcnew System::EventHandler(this, &MainWindow::btnSave_Click);
 			// 
 			// MainWindow
 			// 
@@ -398,6 +425,7 @@ namespace CPQ {
 			this->Controls->Add(this->tableLayoutPanel1);
 			this->Name = L"MainWindow";
 			this->Text = L"MainWindow";
+			this->Shown += gcnew System::EventHandler(this, &MainWindow::MainWindow_Shown);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->dgbProduct->ResumeLayout(false);
@@ -418,5 +446,8 @@ namespace CPQ {
 
 private: System::Void dgvInvoice_CurrentCellChanged(System::Object^ sender, System::EventArgs^ e);
 private: System::Void dgvInvoice_RowsAdded(System::Object^ sender, System::Windows::Forms::DataGridViewRowsAddedEventArgs^ e);
+private: System::Void btnQuote_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void MainWindow_Shown(System::Object^ sender, System::EventArgs^ e);
+private: System::Void btnSave_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }
