@@ -81,7 +81,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>true</CompileAsManaged>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>/Zc:strictStrings %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -95,7 +94,6 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>true</CompileAsManaged>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>/Zc:strictStrings %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -107,7 +105,6 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>true</CompileAsManaged>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>/Zc:strictStrings %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -121,10 +118,10 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>true</CompileAsManaged>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>/Zc:strictStrings %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>sqlite3.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
