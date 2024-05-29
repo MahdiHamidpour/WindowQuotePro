@@ -19,13 +19,26 @@ using namespace System::Drawing;
 using namespace std;
 // using namespace System::Windows::Forms::Form::DialogResult;
 
+void CPQ::MainWindow::editingStarted()
+{
+    if (isEdited)
+        return;
+    isEdited = true;
+    this->Text += "*";
+}
+
+void CPQ::MainWindow::editingFinished()
+{
+    isEdited = false;
+    this->Text = this->Text->Replace("*", "");
+}
+
 inline System::Void CPQ::MainWindow::btnDB_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
 }
 
 System::Void CPQ::MainWindow::btnAdd_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-    srand(time(0));
     auto price = rand() % 100 + 1;
 
     System::Windows::Forms::DataGridViewRow ^ row = gcnew System::Windows::Forms::DataGridViewRow();
@@ -40,7 +53,7 @@ System::Void CPQ::MainWindow::btnAdd_Click(System::Object ^ sender, System::Even
     row->Cells[5]->Value = "0%";
     row->Cells[6]->Value = Convert::ToString(price * this->nudQty->Value);
     this->dgvInvoice->Rows->Add(row);
-    // Assuming 'i' is the index of the new row
+
     this->dgvInvoice->FirstDisplayedScrollingRowIndex = this->dgvInvoice->RowCount - 1;
 }
 
@@ -58,6 +71,7 @@ inline System::Void CPQ::MainWindow::dgvInvoice_CurrentCellChanged(System::Objec
 
 inline System::Void CPQ::MainWindow::dgvInvoice_RowsAdded(System::Object ^ sender, System::Windows::Forms::DataGridViewRowsAddedEventArgs ^ e)
 {
+    editingStarted();
     int totQty = 0;
     int totPrice = 0;
     for (int i = 0; i < this->dgvInvoice->RowCount; i++) {
@@ -74,13 +88,16 @@ inline System::Void CPQ::MainWindow::btnQuote_Click(System::Object ^ sender, Sys
 
 inline System::Void CPQ::MainWindow::MainWindow_Shown(System::Object ^ sender, System::EventArgs ^ e)
 {
+    srand(time(0));
+
     cbxDoorMaterial->SelectedIndex = 0;
     cbxSize->SelectedIndex = 0;
+
+    editingFinished();
 }
 
 inline System::Void CPQ::MainWindow::btnSave_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-    // Inside your button click event handler:
     SaveFileDialog ^ saveFileDialog = gcnew SaveFileDialog();
     saveFileDialog->Filter = "Comma-Separated Values(*.csv)|*.csv";
     saveFileDialog->Title = "Save invoice";
@@ -115,12 +132,23 @@ inline System::Void CPQ::MainWindow::btnSave_Click(System::Object ^ sender, Syst
                 // Write a newline after each row
                 outputFile << std::endl;
             }
-
-            // Close the file
             outputFile.close();
-            std::cout << "Data saved to " << filePath << std::endl;
+            editingFinished();
         } else {
-            std::cerr << "Error opening file for writing." << std::endl;
+            MessageBox::Show(this, "Can't save to file.", "error", MessageBoxButtons::OK, MessageBoxIcon::Error);
         }
+    }
+}
+
+inline System::Void CPQ::MainWindow::dgvInvoice_CellValueChanged(System::Object ^ sender, System::Windows::Forms::DataGridViewCellEventArgs ^ e)
+{
+    editingStarted();
+
+    auto cell = static_cast<DataGridViewCell ^>(sender);
+    try {
+        auto text = msclr::interop::marshal_as<std::string>(cell->Value->ToString());
+
+    } catch (exception ex) {
+        ;
     }
 }

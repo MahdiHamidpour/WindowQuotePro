@@ -14,7 +14,13 @@ using namespace System::Drawing;
 /// </summary>
 public
 ref class MainWindow : public System::Windows::Forms::Form {
-public:
+    private:
+        bool isEdited = false;
+
+        void editingStarted();
+        void editingFinished();
+
+    public:
     MainWindow(void)
     {
         InitializeComponent();
@@ -64,8 +70,6 @@ private:
     System::Windows::Forms::Button ^ btnQuote;
     System::Windows::Forms::Button ^ btnSave;
 
-protected:
-protected:
 private:
     /// <summary>
     /// Required designer variable.
@@ -249,6 +253,7 @@ private:
         this->dgvInvoice->Name = L"dgvInvoice";
         this->dgvInvoice->Size = System::Drawing::Size(1163, 471);
         this->dgvInvoice->TabIndex = 3;
+        this->dgvInvoice->CellValueChanged += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainWindow::dgvInvoice_CellValueChanged);
         this->dgvInvoice->CurrentCellChanged += gcnew System::EventHandler(this, &MainWindow::dgvInvoice_CurrentCellChanged);
         this->dgvInvoice->RowsAdded += gcnew System::Windows::Forms::DataGridViewRowsAddedEventHandler(this, &MainWindow::dgvInvoice_RowsAdded);
         //
@@ -394,7 +399,7 @@ private:
         this->ClientSize = System::Drawing::Size(1169, 632);
         this->Controls->Add(this->tableLayoutPanel1);
         this->Name = L"MainWindow";
-        this->Text = L"MainWindow";
+        this->Text = L"MainWindow ";
         this->Shown += gcnew System::EventHandler(this, &MainWindow::MainWindow_Shown);
         this->panel1->ResumeLayout(false);
         this->panel1->PerformLayout();
@@ -417,5 +422,6 @@ private:
     System::Void btnQuote_Click(System::Object ^ sender, System::EventArgs ^ e);
     System::Void MainWindow_Shown(System::Object ^ sender, System::EventArgs ^ e);
     System::Void btnSave_Click(System::Object ^ sender, System::EventArgs ^ e);
+    System::Void dgvInvoice_CellValueChanged(System::Object ^ sender, System::Windows::Forms::DataGridViewCellEventArgs ^ e);
 };
 }
