@@ -143,12 +143,20 @@ inline System::Void CPQ::MainWindow::btnSave_Click(System::Object ^ sender, Syst
 inline System::Void CPQ::MainWindow::dgvInvoice_CellValueChanged(System::Object ^ sender, System::Windows::Forms::DataGridViewCellEventArgs ^ e)
 {
     editingStarted();
+    if (e->ColumnIndex == 3)
+    {
+        auto cellValue = dgvInvoice->Rows[e->RowIndex]->Cells[e->ColumnIndex]->value;
+        MessageBox::Show(Convert::ToString(cellValue));
 
-    auto cell = static_cast<DataGridViewCell ^>(sender);
-    try {
-        auto text = msclr::interop::marshal_as<std::string>(cell->Value->ToString());
-
-    } catch (exception ex) {
-        ;
     }
+    /*
+    if (dgvInvoice->Columns[e->ColumnIndex]->Name == "Qty")
+    {
+        // Handle the cell value change for the specified column
+        String ^ cellValue = dgvInvoice->Rows[e->RowIndex]->Cells[e->ColumnIndex]->FormattedValue->ToString();
+        int newQty = cellValue->ToInt();
+        dgvInvoice->Rows[e->RowIndex]->Cells[e->ColumnIndex + 3] = Convert::ToString(newQty * dgvInvoice->Rows[e->RowIndex]->Cells[e->ColumnIndex + 1]->FormattedValue->ToString().toint());
+
+        // Your custom logic here...
+    }*/
 }
