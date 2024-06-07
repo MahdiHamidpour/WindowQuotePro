@@ -22,6 +22,7 @@ ref class MainWindow : public System::Windows::Forms::Form {
         void updateTotals();
 
         void textBox_KeyPress(Object^ sender, KeyPressEventArgs^ e);
+        bool import_from_file();
 
     public:
     MainWindow(void);
@@ -60,14 +61,31 @@ private:
     System::Windows::Forms::TextBox ^ txtTotalPrice;
 
     System::Windows::Forms::Button ^ btnSave;
-    System::Windows::Forms::DataGridViewTextBoxColumn^ Product;
-    System::Windows::Forms::DataGridViewComboBoxColumn^ Material;
-    System::Windows::Forms::DataGridViewComboBoxColumn^ Size;
-    System::Windows::Forms::DataGridViewTextBoxColumn^ Qty;
-    System::Windows::Forms::DataGridViewTextBoxColumn^ PricePerUnit;
-    System::Windows::Forms::DataGridViewTextBoxColumn^ Off;
-    System::Windows::Forms::DataGridViewTextBoxColumn^ TotalPrice;
+
+
+
+
+
+
+
     System::Windows::Forms::Button^ btnDelete;
+    System::Windows::Forms::Button^ btnOpen;
+private: System::Windows::Forms::Button^ btnImport;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ Product;
+private: System::Windows::Forms::DataGridViewComboBoxColumn^ Material;
+private: System::Windows::Forms::DataGridViewComboBoxColumn^ Size;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ Qty;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ PricePerUnit;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ Off;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ TotalPrice;
+
+
+
+
+
+
+
+
 
 
     /// <summary>
@@ -95,13 +113,6 @@ private:
         this->label3 = (gcnew System::Windows::Forms::Label());
         this->label2 = (gcnew System::Windows::Forms::Label());
         this->dgvInvoice = (gcnew System::Windows::Forms::DataGridView());
-        this->Product = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-        this->Material = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
-        this->Size = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
-        this->Qty = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-        this->PricePerUnit = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-        this->Off = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-        this->TotalPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
         this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
         this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
         this->label5 = (gcnew System::Windows::Forms::Label());
@@ -109,6 +120,15 @@ private:
         this->label6 = (gcnew System::Windows::Forms::Label());
         this->txtTotalPrice = (gcnew System::Windows::Forms::TextBox());
         this->btnSave = (gcnew System::Windows::Forms::Button());
+        this->btnOpen = (gcnew System::Windows::Forms::Button());
+        this->btnImport = (gcnew System::Windows::Forms::Button());
+        this->Product = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+        this->Material = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
+        this->Size = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
+        this->Qty = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+        this->PricePerUnit = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+        this->Off = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+        this->TotalPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
         this->panel1->SuspendLayout();
         this->dgbProduct->SuspendLayout();
         (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudQty))->BeginInit();
@@ -134,7 +154,7 @@ private:
         this->cbxCustomer->Location = System::Drawing::Point(204, 37);
         this->cbxCustomer->Margin = System::Windows::Forms::Padding(6);
         this->cbxCustomer->Name = L"cbxCustomer";
-        this->cbxCustomer->Size = System::Drawing::Size(238, 33);
+        this->cbxCustomer->Size = System::Drawing::Size(513, 33);
         this->cbxCustomer->TabIndex = 2;
         // 
         // panel1
@@ -174,9 +194,9 @@ private:
         // 
         // btnDelete
         // 
-        this->btnDelete->Location = System::Drawing::Point(1240, 38);
+        this->btnDelete->Location = System::Drawing::Point(1240, 35);
         this->btnDelete->Name = L"btnDelete";
-        this->btnDelete->Size = System::Drawing::Size(170, 40);
+        this->btnDelete->Size = System::Drawing::Size(170, 43);
         this->btnDelete->TabIndex = 4;
         this->btnDelete->Text = L"Delete";
         this->btnDelete->UseVisualStyleBackColor = true;
@@ -274,67 +294,6 @@ private:
         this->dgvInvoice->EditingControlShowing += gcnew System::Windows::Forms::DataGridViewEditingControlShowingEventHandler(this, &MainWindow::dgvInvoice_EditingControlShowing);
         this->dgvInvoice->RowsAdded += gcnew System::Windows::Forms::DataGridViewRowsAddedEventHandler(this, &MainWindow::dgvInvoice_RowsAdded);
         // 
-        // Product
-        // 
-        this->Product->HeaderText = L"Product";
-        this->Product->MinimumWidth = 50;
-        this->Product->Name = L"Product";
-        this->Product->ReadOnly = true;
-        this->Product->Width = 200;
-        // 
-        // Material
-        // 
-        this->Material->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
-        this->Material->HeaderText = L"Material";
-        this->Material->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Wood", L"Metal" });
-        this->Material->MinimumWidth = 50;
-        this->Material->Name = L"Material";
-        this->Material->Resizable = System::Windows::Forms::DataGridViewTriState::True;
-        this->Material->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::Automatic;
-        this->Material->Width = 134;
-        // 
-        // Size
-        // 
-        this->Size->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
-        this->Size->HeaderText = L"Size";
-        this->Size->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Small", L"Medium", L"Large" });
-        this->Size->MinimumWidth = 10;
-        this->Size->Name = L"Size";
-        this->Size->Resizable = System::Windows::Forms::DataGridViewTriState::True;
-        this->Size->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::Automatic;
-        this->Size->Width = 99;
-        // 
-        // Qty
-        // 
-        this->Qty->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
-        this->Qty->HeaderText = L"Qty";
-        this->Qty->MinimumWidth = 10;
-        this->Qty->Name = L"Qty";
-        this->Qty->Width = 90;
-        // 
-        // PricePerUnit
-        // 
-        this->PricePerUnit->HeaderText = L"Unit Price";
-        this->PricePerUnit->MinimumWidth = 50;
-        this->PricePerUnit->Name = L"PricePerUnit";
-        this->PricePerUnit->ReadOnly = true;
-        this->PricePerUnit->Width = 150;
-        // 
-        // Off
-        // 
-        this->Off->HeaderText = L"Off";
-        this->Off->MinimumWidth = 10;
-        this->Off->Name = L"Off";
-        this->Off->Width = 50;
-        // 
-        // TotalPrice
-        // 
-        this->TotalPrice->HeaderText = L"Total Price";
-        this->TotalPrice->MinimumWidth = 50;
-        this->TotalPrice->Name = L"TotalPrice";
-        this->TotalPrice->ReadOnly = true;
-        this->TotalPrice->Width = 160;
-        // 
         // tableLayoutPanel1
         // 
         this->tableLayoutPanel1->AutoScroll = true;
@@ -365,6 +324,8 @@ private:
         this->flowLayoutPanel1->Controls->Add(this->label6);
         this->flowLayoutPanel1->Controls->Add(this->txtTotalPrice);
         this->flowLayoutPanel1->Controls->Add(this->btnSave);
+        this->flowLayoutPanel1->Controls->Add(this->btnOpen);
+        this->flowLayoutPanel1->Controls->Add(this->btnImport);
         this->flowLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Fill;
         this->flowLayoutPanel1->Location = System::Drawing::Point(6, 1133);
         this->flowLayoutPanel1->Margin = System::Windows::Forms::Padding(6);
@@ -423,6 +384,89 @@ private:
         this->btnSave->UseVisualStyleBackColor = true;
         this->btnSave->Click += gcnew System::EventHandler(this, &MainWindow::btnSave_Click);
         // 
+        // btnOpen
+        // 
+        this->btnOpen->Location = System::Drawing::Point(832, 12);
+        this->btnOpen->Margin = System::Windows::Forms::Padding(6);
+        this->btnOpen->Name = L"btnOpen";
+        this->btnOpen->Size = System::Drawing::Size(150, 44);
+        this->btnOpen->TabIndex = 5;
+        this->btnOpen->Text = L"Open";
+        this->btnOpen->UseVisualStyleBackColor = true;
+        this->btnOpen->Click += gcnew System::EventHandler(this, &MainWindow::btnOpen_Click);
+        // 
+        // btnImport
+        // 
+        this->btnImport->Location = System::Drawing::Point(994, 12);
+        this->btnImport->Margin = System::Windows::Forms::Padding(6);
+        this->btnImport->Name = L"btnImport";
+        this->btnImport->Size = System::Drawing::Size(150, 44);
+        this->btnImport->TabIndex = 5;
+        this->btnImport->Text = L"Import";
+        this->btnImport->UseVisualStyleBackColor = true;
+        this->btnImport->Click += gcnew System::EventHandler(this, &MainWindow::btnImport_Click);
+        // 
+        // Product
+        // 
+        this->Product->HeaderText = L"Product";
+        this->Product->MinimumWidth = 50;
+        this->Product->Name = L"Product";
+        this->Product->ReadOnly = true;
+        this->Product->Width = 200;
+        // 
+        // Material
+        // 
+        this->Material->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
+        this->Material->HeaderText = L"Material";
+        this->Material->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Wood", L"Metal" });
+        this->Material->MinimumWidth = 50;
+        this->Material->Name = L"Material";
+        this->Material->Resizable = System::Windows::Forms::DataGridViewTriState::True;
+        this->Material->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::Automatic;
+        this->Material->Width = 134;
+        // 
+        // Size
+        // 
+        this->Size->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
+        this->Size->HeaderText = L"Size";
+        this->Size->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Small", L"Medium", L"Large" });
+        this->Size->MinimumWidth = 10;
+        this->Size->Name = L"Size";
+        this->Size->Resizable = System::Windows::Forms::DataGridViewTriState::True;
+        this->Size->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::Automatic;
+        this->Size->Width = 99;
+        // 
+        // Qty
+        // 
+        this->Qty->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
+        this->Qty->HeaderText = L"Qty";
+        this->Qty->MinimumWidth = 10;
+        this->Qty->Name = L"Qty";
+        this->Qty->Width = 90;
+        // 
+        // PricePerUnit
+        // 
+        this->PricePerUnit->HeaderText = L"Unit Price";
+        this->PricePerUnit->MinimumWidth = 50;
+        this->PricePerUnit->Name = L"PricePerUnit";
+        this->PricePerUnit->ReadOnly = true;
+        this->PricePerUnit->Width = 150;
+        // 
+        // Off
+        // 
+        this->Off->HeaderText = L"Off(%)";
+        this->Off->MinimumWidth = 10;
+        this->Off->Name = L"Off";
+        this->Off->Width = 80;
+        // 
+        // TotalPrice
+        // 
+        this->TotalPrice->HeaderText = L"Total Price";
+        this->TotalPrice->MinimumWidth = 50;
+        this->TotalPrice->Name = L"TotalPrice";
+        this->TotalPrice->ReadOnly = true;
+        this->TotalPrice->Width = 160;
+        // 
         // MainWindow
         // 
         this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
@@ -457,5 +501,7 @@ private:
     System::Void dgvInvoice_CellValueChanged(System::Object ^ sender, System::Windows::Forms::DataGridViewCellEventArgs ^ e);
     System::Void dgvInvoice_EditingControlShowing(System::Object^ sender, System::Windows::Forms::DataGridViewEditingControlShowingEventArgs^ e);
     System::Void btnDelete_Click(System::Object^ sender, System::EventArgs^ e);
+    System::Void btnOpen_Click(System::Object^ sender, System::EventArgs^ e);
+    System::Void btnImport_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }
